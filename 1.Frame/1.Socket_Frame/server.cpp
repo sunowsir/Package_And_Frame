@@ -14,18 +14,18 @@ using std::endl;
 using namespace Sunow_Lib;
 
 int main() {
-    MYSocket server("192.168.2.133", 6667);
+    MYSocket server("192.168.2.13", 6667);
     server.server_create();
     server.server_accept();
     char fromIP[20] = {0};
     server.server_get_IP(fromIP);
-    cout << fromIP << "already connect!" << endl;
+    cout << fromIP << " already connect!" << endl;
     // char data[100] = {0};
     int data = 0;
-    server.recv_data<int>(data, (int)sizeof(int));
-    cout << "receive : \"" << data << "\"" << endl;
+    server.recv_data<int>(&data, (int)sizeof(int));
+    cout << "receive : " << data << " from client" << endl;
     data = 100;
     server.send_data<int>(data, (int)sizeof(int));
-    cout << "send : \"" << data << "\"" << endl;
+    cout << "send : " << data << " to client" << endl;
     return 0;
 }

@@ -32,8 +32,31 @@ namespace Sunow_Lib {
         template <typename T>
         bool send_data(T data, int bitsize);
         template <typename T>
-        bool recv_data(T return_data, int bitsize);
+        bool recv_data(T *return_data, int bitsize);
     };
+    
+    /* 发送数据  */
+    template <typename T>
+    bool MYSocket::send_data(T data, int bitsize) {
+        if (send(this->socketfd, &data, bitsize, 0) < 0) {
+            std::cerr << "Sunow_Lib::MYSocket::send_data() : [send error]!" << std::endl;
+            return false;
+        }
+        return true;
+    }
+    
+    /* 接收数据  */
+    template <typename T>
+    bool MYSocket::recv_data(T *return_data, int bitsize) {
+        if (recv(this->socketfd, return_data, bitsize, 0) <= -1) {
+            std::cerr << "Sunow_Lib::MYSocket::recv_data() : [recv error]!" << std::endl;
+            return false;
+        }
+        return true;
+    }
+    
+
+    
 }
 
 

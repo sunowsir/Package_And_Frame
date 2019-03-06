@@ -56,28 +56,8 @@ bool Sunow_Lib::MYSocket::client_create() {
 
 /* socket服务端获取accept监听到的连入者IP */
 bool Sunow_Lib::MYSocket::server_get_IP(char *return_IP) {
-    if (inet_ntop(AF_INET, (void *)&this->accept_socket_addr.sin_addr, return_IP, 20) == NULL) {
+    if (inet_ntop(AF_INET, (void *)&(this->accept_socket_addr.sin_addr), return_IP, 20) == NULL) {
         std::cerr << "Sunow_Lib::MYSocket::server_get_IP() : [inet_ntop error]!" << std::endl;
-        return false;
-    }
-    return true;
-}
-
-/* 发送数据  */
-template <typename T>
-bool Sunow_Lib::MYSocket::send_data(T data, int bitsize) {
-    if (send(this->socketfd, &data, bitsize, 0) < 0) {
-        std::cerr << "Sunow_Lib::MYSocket::send_data() : [send error]!" << std::endl;
-        return false;
-    }
-    return true;
-}
-
-/* 接收数据  */
-template <typename T>
-bool Sunow_Lib::MYSocket::recv_data(T return_data, int bitsize) {
-    if (recv(this->socketfd, &return_data, bitsize, 0) <= -1) {
-        std::cerr << "Sunow_Lib::MYSocket::recv_data() : [recv error]!" << std::endl;
         return false;
     }
     return true;
@@ -86,35 +66,12 @@ bool Sunow_Lib::MYSocket::recv_data(T return_data, int bitsize) {
 bool Sunow_Lib::MYSocket::server_accept() {
     int new_socketfd;
     this->accept_socket_addr_len = sizeof(this->accept_socket_addr);
-    new_socketfd = accept(this->socketfd, (struct sockaddr *)&this->socket_addr, &this->accept_socket_addr_len);
+    new_socketfd = accept(this->socketfd, (struct sockaddr *)&this->accept_socket_addr, &this->accept_socket_addr_len);
     if (new_socketfd < 0) {
         return false;
     }
     this->old_socketfd = this->socketfd;
     this->socketfd = new_socketfd;
     return true;
-}
-
-
-using std::cin;
-using std::cout;
-using std::endl;
-using namespace Sunow_Lib;
-
-int main() {
-    MYSocket server("192.168.2.133", 6667);
-    server.server_create();
-    server.server_accept();
-    char fromIP[20] = {0};
-    server.server_get_IP(fromIP);
-    cout << fromIP << "already connect!" << endl;
-    // char data[100] = {0};
-    int data = 0;
-    server.recv_data<int>(data, (int)sizeof(int));
-    cout << "receive : \"" << data << "\"" << endl;
-    data = 100;
-    server.send_data<int>(data, (int)sizeof(int));
-    cout << "send : \"" << data << "\"" << endl;
-    return 0;
 }
 
