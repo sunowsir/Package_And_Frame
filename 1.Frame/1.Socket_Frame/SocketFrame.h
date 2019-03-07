@@ -24,8 +24,8 @@ namespace Sunow_Lib {
         MYSocket(const char *IP, const int Port = 6666);
         ~MYSocket();
         bool server_create();
-        bool server_get_IP(char *return_IP);
         bool server_accept();
+        bool server_get_IP(char *return_IP);
         
         bool client_create();
         
@@ -54,9 +54,6 @@ namespace Sunow_Lib {
         }
         return true;
     }
-    
-
-    
 }
 
 
