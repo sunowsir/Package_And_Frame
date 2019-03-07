@@ -17,10 +17,11 @@ using namespace Sunow_Lib;
 int main() {
     MYSocket client("192.168.2.13", 6667);
     client.client_create();
-    int data = 111;
-    client.send_data<int>(data, sizeof(int));
-    cout << "send :" << data << " to server" << endl;
-    client.recv_data<int>(&data, sizeof(int));
-    cout << "receive : " << data << " to client" << endl;
+    char data[] = "hello server";
+    client.send_data(data, sizeof(data) * 10);
+    cout << "send : '" << data << "' to server" << endl;
+    int data1 = 0;
+    client.recv_data(&data1, sizeof(int));
+    cout << "receive : '" << data1 << "' from client" << endl;
     return 0;
 }

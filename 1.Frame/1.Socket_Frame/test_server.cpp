@@ -20,12 +20,11 @@ int main() {
     char fromIP[20] = {0};
     server.server_get_IP(fromIP);
     cout << fromIP << " already connect!" << endl;
-    // char data[100] = {0};
-    int data = 0;
-    server.recv_data<int>(&data, (int)sizeof(int));
-    cout << "receive : " << data << " from client" << endl;
-    data = 100;
-    server.send_data<int>(data, (int)sizeof(int));
-    cout << "send : " << data << " to client" << endl;
+    char data[100] = {0};
+    server.recv_data(data, sizeof(char) * 100);
+    cout << "receive : '" << data << "' from client" << endl;
+    int data1 = 123;
+    server.send_data(&data1, sizeof(data1));
+    cout << "send : '" << data1 << "' to client" << endl;
     return 0;
 }

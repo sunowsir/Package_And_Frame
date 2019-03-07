@@ -30,15 +30,15 @@ namespace Sunow_Lib {
         bool client_create();
         
         template <typename T>
-        bool send_data(T data, int bitsize);
+        bool send_data(T *data, int bitsize);
         template <typename T>
         bool recv_data(T *return_data, int bitsize);
     };
     
     /* 发送数据  */
     template <typename T>
-    bool MYSocket::send_data(T data, int bitsize) {
-        if (send(this->socketfd, &data, bitsize, 0) < 0) {
+    bool MYSocket::send_data(T *data, const int bitsize) {
+        if (send(this->socketfd, data, bitsize, 0) < 0) {
             std::cerr << "Sunow_Lib::MYSocket::send_data() : [send error]!" << std::endl;
             return false;
         }
@@ -47,8 +47,9 @@ namespace Sunow_Lib {
     
     /* 接收数据  */
     template <typename T>
-    bool MYSocket::recv_data(T *return_data, int bitsize) {
-        if (recv(this->socketfd, return_data, bitsize, 0) <= -1) {
+    bool MYSocket::recv_data(T *return_data, const int bitsize) {
+        memset(return_data, 0, sizeof(return_data));
+        if (recv(this->socketfd, return_data, bitsize, 0) < 0) {
             std::cerr << "Sunow_Lib::MYSocket::recv_data() : [recv error]!" << std::endl;
             return false;
         }

@@ -74,4 +74,3 @@ bool Sunow_Lib::MYSocket::server_accept() {
     this->socketfd = new_socketfd;
     return true;
 }
-
