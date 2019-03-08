@@ -1,10 +1,10 @@
 # Socket框架说明
 
-* *==namespace==* :  `Sunow_Socket_Lib`
+* *namespace* :  `Sunow_Socket_Lib`
 
-* *==class name==* :  `MYSocket`
+* *class name* :  `MYSocket`
 
-* *==成员函数==*　：
+* *成员函数*　：
 
   1.  构造函数：
 
