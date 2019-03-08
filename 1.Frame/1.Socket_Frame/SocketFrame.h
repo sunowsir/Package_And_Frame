@@ -9,7 +9,14 @@
 #ifndef _SOCKETFRAME_H
 #define _SOCKETFRAME_H
 
-#include "../needHead.h"
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 
 namespace Sunow_Socket_Lib {
     class MYSocket {
