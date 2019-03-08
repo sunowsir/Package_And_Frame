@@ -11,7 +11,7 @@
 
 #include "../needHead.h"
 
-namespace Sunow_Lib {
+namespace Sunow_Socket_Lib {
     class MYSocket {
     private : 
         char *IP;
@@ -30,9 +30,9 @@ namespace Sunow_Lib {
         bool client_create();
         
         template <typename T>
-        bool send_data(T *data, int bitsize);
+        bool send_data(T *data, const int bitsize);
         template <typename T>
-        bool recv_data(T *return_data, int bitsize);
+        bool recv_data(T *return_data, const int bitsize);
     };
     
     /* 发送数据  */

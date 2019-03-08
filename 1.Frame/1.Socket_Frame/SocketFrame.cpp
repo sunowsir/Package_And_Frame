@@ -8,7 +8,7 @@
 
 #include "./SocketFrame.h"
 
-Sunow_Lib::MYSocket::MYSocket(const char *IP, const int Port) {
+Sunow_Socket_Lib::MYSocket::MYSocket(const char *IP, const int Port) {
     if (IP == NULL) {
         std::cerr << "Sunow_Lib::MYSocket::MYSocket() [IP is NULL]!" << std::endl;
         exit(1);
@@ -25,12 +25,12 @@ Sunow_Lib::MYSocket::MYSocket(const char *IP, const int Port) {
     this->socketfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 }
 
-Sunow_Lib::MYSocket::~MYSocket() {
+Sunow_Socket_Lib::MYSocket::~MYSocket() {
     if (this->IP != NULL) delete[] this->IP;
     close(this->socketfd);
 }
 
-bool Sunow_Lib::MYSocket::server_create () {
+bool Sunow_Socket_Lib::MYSocket::server_create () {
     if (bind(this->socketfd, (struct sockaddr*)&this->socket_addr, sizeof(this->socket_addr)) < 0) {
         std::cerr << "sunow_Lib::MYSocket::server_create() : [bind error]!" << std::endl;
         return false;
@@ -42,7 +42,7 @@ bool Sunow_Lib::MYSocket::server_create () {
     return true;
 }
 
-bool Sunow_Lib::MYSocket::client_create() {
+bool Sunow_Socket_Lib::MYSocket::client_create() {
     if (inet_pton(AF_INET, this->IP, &this->socket_addr.sin_addr) < 0) {
         std::cerr << "Sunow_Lib::MYSocket::client_create() : [inet_pton error]!" << std::endl;
         return false;
@@ -55,7 +55,7 @@ bool Sunow_Lib::MYSocket::client_create() {
 }
 
 /* socket服务端获取accept监听到的连入者IP */
-bool Sunow_Lib::MYSocket::server_get_IP(char *return_IP) {
+bool Sunow_Socket_Lib::MYSocket::server_get_IP(char *return_IP) {
     if (inet_ntop(AF_INET, (void *)&(this->accept_socket_addr.sin_addr), return_IP, 20) == NULL) {
         std::cerr << "Sunow_Lib::MYSocket::server_get_IP() : [inet_ntop error]!" << std::endl;
         return false;
@@ -63,7 +63,7 @@ bool Sunow_Lib::MYSocket::server_get_IP(char *return_IP) {
     return true;
 }
 
-bool Sunow_Lib::MYSocket::server_accept() {
+bool Sunow_Socket_Lib::MYSocket::server_accept() {
     int new_socketfd;
     this->accept_socket_addr_len = sizeof(this->accept_socket_addr);
     new_socketfd = accept(this->socketfd, (struct sockaddr *)&this->accept_socket_addr, &this->accept_socket_addr_len);
